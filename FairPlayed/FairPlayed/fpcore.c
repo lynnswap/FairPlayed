@@ -273,9 +273,9 @@ void fp_attempt_describe(const fp_attempt_t *a, char *buf, size_t len) {
 
 static bool attempt_looks_decrypted(const fp_attempt_t *a) {
     // Encrypted text has ~8.0 bits/byte regardless of size; decrypted arm64 code stays below 7.5.
-    // Require only one new RET/PACIBSP word so tiny (1-page) binaries are not rejected.
+    // Valid code may contain only tail calls or traps, so instruction counts are diagnostic only.
     return a->mremap_ret == 0 && a->pages_ok == a->pages_total && a->changed &&
-           a->ent_before > 7.9 && a->ent_after < 7.5 && a->ret_after > a->ret_before;
+           a->ent_before > 7.9 && a->ent_after < 7.5;
 }
 
 int fp_probe_file(const char *path, const int *modes, int nmodes, fp_log_t log, void *ctx) {
