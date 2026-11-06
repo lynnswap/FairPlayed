@@ -27,8 +27,10 @@ Each slice is accepted as decrypted only when all of these hold:
 - `mremap_encrypted` returns 0;
 - every page reads back without a fault;
 - the bytes changed;
-- entropy fell from about 8.0 to below 7.5 bits per byte;
-- new `ret`/`retab`/`pacibsp` instructions appeared.
+- entropy fell from about 8.0 to below 7.5 bits per byte.
+
+Instruction counts remain in the diagnostic log but do not determine success.
+Valid code can consist entirely of tail calls or traps, with no return instructions.
 
 The decrypted slice is written back with `cryptid = 0`.
 
